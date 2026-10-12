@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>br.com.brunowl</groupId>
+  <artifactId>jcertificate-app</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>JCertificate</name>
+  <description>Simulação de certificação e assinatura digital de arquivos</description>
+
+  <properties>
+    <!-- Compila para o Java 21 (LTS), mesmo rodando no JDK 26 -->
+    <maven.compiler.release>21</maven.compiler.release>
+    <!-- Garante que acentos nos textos não quebrem -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <!-- Driver JDBC do SQLite: permite o Java conversar com o banco -->
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>3.51.0.0</version>
+    </dependency>
+  </dependencies>
+</project>
