@@ -1,7 +1,6 @@
 package cripto;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.Signature;
 
 public class Principal {
 	public static void main(String[] args) 
@@ -13,22 +12,16 @@ public class Principal {
 			KeyPair chave = keyGen.generateKeyPair();
 			
 			//Mensagem assinada válida - printa true
-			Signature assinador = Signature.getInstance("SHA256withRSA");
 			byte[] mensagem = "Maria Luiza".getBytes();
-			assinador.initSign(chave.getPrivate());
-			assinador.update(mensagem);
-			byte[] mensagemAssinada = assinador.sign();
-			assinador.initVerify(chave.getPublic());
-			assinador.update(mensagem);
-			System.out.println(assinador.verify(mensagemAssinada));
+			byte[] mensagemAssinada = Assinador.assinar(mensagem, chave.getPrivate());
+			System.out.println(Verificador.verificar(mensagem, mensagemAssinada, chave.getPublic()));
 
 			//Mensagem assinada inválida - mensagem original vai ser alterada após a assinatura
 			byte[] mensagemAlterada = "Maria Luisa".getBytes(); //Maria Luiza -> Maria Luisa, alteração de 1 byte
-			assinador.update(mensagemAlterada);
-			System.out.println(assinador.verify(mensagemAssinada));
+			System.out.println(Verificador.verificar(mensagemAlterada, mensagemAssinada, chave.getPublic()));
 		}
 		catch (Exception e) {
-			System.out.println("O Ambiente não suporta RSA!");
+			e.printStackTrace();
 		}
 		
 		
