@@ -21,7 +21,7 @@ public class Principal {
 			System.out.println(Verificador.verificar(mensagemAlterada, mensagemAssinada, chave.getPublic()));
 		}
 		catch (Exception e) {
-			System.out.println("O Ambiente não suporta RSA!");
+			e.printStackTrace();
 		}
 		
 		
