@@ -15,9 +15,7 @@ public class Principal {
 			//Mensagem assinada válida - printa true
 			Signature assinador = Signature.getInstance("SHA256withRSA");
 			byte[] mensagem = "Maria Luiza".getBytes();
-			assinador.initSign(chave.getPrivate());
-			assinador.update(mensagem);
-			byte[] mensagemAssinada = assinador.sign();
+			byte[] mensagemAssinada = Assinador.assinar(mensagem, chave.getPrivate());
 			assinador.initVerify(chave.getPublic());
 			assinador.update(mensagem);
 			System.out.println(assinador.verify(mensagemAssinada));
