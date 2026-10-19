@@ -20,7 +20,7 @@ Aplicação desktop em **Java** (Swing/JFrame) que **simula** um sistema de cert
 O mínimo para o fluxo completo funcionar, já atendendo aos requisitos acima.
 
 - [x] **Projeto Maven configurado** (Java 21 + driver JDBC do SQLite)
-- [x] **Camada de criptografia isolada e testada** (gerar par RSA 2048, assinar, verificar, detectar alteração de 1 byte)
+- [ ] **Camada de criptografia isolada e testada** (gerar par RSA 2048, assinar, verificar, detectar alteração de 1 byte)
 - [ ] **Hash de arquivos em blocos** (qualquer tamanho de arquivo, sem carregar tudo na memória)
 - [ ] **Banco SQLite** com tabela de usuários
 - [ ] **Cadastro e login**: senha armazenada como hash PBKDF2WithHmacSHA256 + salt (ver "Decisões de design")
