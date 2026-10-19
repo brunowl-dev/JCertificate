@@ -87,8 +87,8 @@ public class AssinadorVerificadorTest {
     @Test 
     void verificador_assinaturaInvalida() throws Exception {
         byte[] mensagem = "Mensagem".getBytes();
-        byte[] mensagemAssinada = Assinador.assinar("SHA256withRSA", mensagem, chave.getPrivate());
-        byte[] mensagemAlterada = "MensagemAlterada".getBytes();
-        assertEquals(false, Verificador.verificar("SHA256withRSA", mensagemAlterada, mensagemAssinada, chave.getPublic()));
+        byte[] assinatura = Assinador.assinar("SHA256withRSA", mensagem, chave.getPrivate());
+        byte[] mensagemAlterada = "mensagem".getBytes();
+        assertEquals(false, Verificador.verificar("SHA256withRSA", mensagemAlterada, assinatura, chave.getPublic()));
     }
 }
