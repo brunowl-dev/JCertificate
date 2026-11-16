@@ -8,7 +8,7 @@ Contexto e regras de trabalho para o Claude Code neste projeto. Leia tudo antes 
 
 - Repositório: `brunowl-dev/JCertificate`
 - Projeto Maven: `groupId br.com.brunowl`, `artifactId jcertificate-app`, versão `0.0.1-SNAPSHOT`
-- IDE do autor: Eclipse. JDK: 26.
+- IDE do autor: VS Code (o projeto foi criado no Eclipse). JDK: 26.
 - Gerenciador de dependências: **Maven**
 - Banco: **SQLite** (via `sqlite-jdbc`)
 
