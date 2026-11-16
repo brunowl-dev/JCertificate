@@ -37,8 +37,9 @@ Legenda: `[ ]` pendente · `[x]` concluído · ❓ decisão em aberto (definir a
   - [x] assinar → verificar = válido
   - [x] mensagem alterada após assinar → inválido
   - [x] chave nula → `InvalidKeyException`
-  - [ ] chave pública de outro usuário → inválido
-  - [ ] assinatura corrompida com tamanho errado → `SignatureException` (tratar como "inválida" na GUI)
+  - [x] chave pública de outro usuário → inválido
+  - [x] assinatura corrompida com tamanho errado → `SignatureException` (tratar como "inválida" na GUI)
+  - [x] assinatura com tamanho certo e conteúdo lixo → inválido
   - [ ] arquivo: assinar → verificar = válido; alterar 1 byte do arquivo → inválido
   - [ ] senha correta/incorreta (PBKDF2)
   - [ ] chave privada: cifrar → decifrar com senha correta = mesma chave; senha errada → falha
