@@ -37,26 +37,19 @@ public class AssinadorVerificadorTest {
 		keyGen.initialize(2048);
 	    chave = keyGen.generateKeyPair();
         chave2 = keyGen.generateKeyPair();
-    }
-
-    @Test 
-    void assinador_algoritmoNaoExistente() {
-        assertThrows(NoSuchAlgorithmException.class, () -> {
-            Assinador.assinar("AlgoritmoInexistente", "Mensagem".getBytes(StandardCharsets.UTF_8), chave.getPrivate());
-        });
-    }       
+    }      
 
     @Test 
     void assinador_chaveInvalida() {
         assertThrows(InvalidKeyException.class, () -> {
-            Assinador.assinar("SHA256withRSA", "Mensagem".getBytes(StandardCharsets.UTF_8), null);
+            Assinador.assinar("Mensagem".getBytes(StandardCharsets.UTF_8), null);
         });
     }
 
     @Test 
     void assinador_chaveValida() throws Exception {
         //Isso não é um teste de assinatura, mas sim de que a assinatura foi gerada com sucesso. A verificação da assinatura é feita em outro teste.
-        byte[] assinatura = Assinador.assinar("SHA256withRSA", "Mensagem".getBytes(StandardCharsets.UTF_8), chave.getPrivate());
+        byte[] assinatura = Assinador.assinar("Mensagem".getBytes(StandardCharsets.UTF_8), chave.getPrivate());
         assertEquals(256, assinatura.length);
     }
 
@@ -69,37 +62,30 @@ public class AssinadorVerificadorTest {
     @Test 
     void verificador_chaveInvalida() {
         assertThrows(InvalidKeyException.class, () -> {
-            Verificador.verificar("SHA256withRSA", "Mensagem".getBytes(StandardCharsets.UTF_8), "Assinatura".getBytes(StandardCharsets.UTF_8), null);
-        });
-    }
-
-    @Test 
-    void verificador_algoritmoNaoExistente() {
-        assertThrows(NoSuchAlgorithmException.class, () -> {
-            Verificador.verificar("AlgoritmoInexistente", "Mensagem".getBytes(StandardCharsets.UTF_8), "Assinatura".getBytes(StandardCharsets.UTF_8), chave.getPublic());
+            Verificador.verificar("Mensagem".getBytes(StandardCharsets.UTF_8), "Assinatura".getBytes(StandardCharsets.UTF_8), null);
         });
     }
 
     @Test
     void verificador_assinaturaValida() throws Exception {
         byte[] mensagem = "Mensagem".getBytes(StandardCharsets.UTF_8);
-        byte[] mensagemAssinada = Assinador.assinar("SHA256withRSA", mensagem, chave.getPrivate());
-        assertTrue(Verificador.verificar("SHA256withRSA", mensagem, mensagemAssinada, chave.getPublic()));
+        byte[] mensagemAssinada = Assinador.assinar(mensagem, chave.getPrivate());
+        assertTrue(Verificador.verificar(mensagem, mensagemAssinada, chave.getPublic()));
     }
 
     @Test 
     void verificador_assinaturaInvalida() throws Exception {
         byte[] mensagem = "Mensagem".getBytes(StandardCharsets.UTF_8);
-        byte[] assinatura = Assinador.assinar("SHA256withRSA", mensagem, chave.getPrivate());
+        byte[] assinatura = Assinador.assinar(mensagem, chave.getPrivate());
         byte[] mensagemAlterada = "mensagem".getBytes(StandardCharsets.UTF_8);
-        assertEquals(false, Verificador.verificar("SHA256withRSA", mensagemAlterada, assinatura, chave.getPublic()));
+        assertEquals(false, Verificador.verificar(mensagemAlterada, assinatura, chave.getPublic()));
     }
 
     @Test
     void verificador_assinaturaComOutraChave() throws Exception {
         byte[] mensagem = "Mensagem".getBytes(StandardCharsets.UTF_8);
-        byte[] assinatura = Assinador.assinar("SHA256withRSA", mensagem, chave.getPrivate());
-        assertEquals(false, Verificador.verificar("SHA256withRSA", mensagem, assinatura, chave2.getPublic()));
+        byte[] assinatura = Assinador.assinar(mensagem, chave.getPrivate());
+        assertEquals(false, Verificador.verificar(mensagem, assinatura, chave2.getPublic()));
     }
 
     @Test
@@ -107,7 +93,7 @@ public class AssinadorVerificadorTest {
         byte[] mensagem = "Mensagem".getBytes(StandardCharsets.UTF_8);
         byte[] assinatura = new byte[10];
         assertThrows(SignatureException.class, () -> {
-            Verificador.verificar("SHA256withRSA", mensagem, assinatura, chave.getPublic());
+            Verificador.verificar(mensagem, assinatura, chave.getPublic());
         });
     }
 
@@ -115,6 +101,6 @@ public class AssinadorVerificadorTest {
     void verificador_assinaturaComConteudoLixo() throws Exception {
         byte[] mensagem = "Mensagem".getBytes(StandardCharsets.UTF_8);
         byte[] assinatura = new byte[256];
-        assertEquals(false, Verificador.verificar("SHA256withRSA", mensagem, assinatura, chave.getPublic()));
+        assertEquals(false, Verificador.verificar(mensagem, assinatura, chave.getPublic()));
     }
 }

@@ -6,9 +6,11 @@ import java.security.Signature;
 import java.security.SignatureException;
 
 public class Assinador {
-    public static byte[] assinar(String algoritmo, byte[] mensagem, PrivateKey chave) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException
+    private static final String ALGORITMO_PADRAO = "SHA256withRSA";
+
+    public static byte[] assinar(byte[] mensagem, PrivateKey chave) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException
     {
-        Signature assinador = Signature.getInstance(algoritmo);
+        Signature assinador = Signature.getInstance(ALGORITMO_PADRAO);
         assinador.initSign(chave);
         assinador.update(mensagem);
         return assinador.sign();

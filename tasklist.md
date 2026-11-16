@@ -29,7 +29,7 @@ Legenda: `[ ]` pendente · `[x]` concluído · ❓ decisão em aberto (definir a
 - [ ] Gerar par de chaves RSA 2048 (classe `GeradorDeChaves`)
 - [x] Assinar bytes com a chave privada (`Assinador`)
 - [x] Verificar assinatura de bytes com a chave pública (`Verificador`)
-- [ ] Fixar o algoritmo como constante dentro das classes (não receber `String algoritmo` por parâmetro)
+- [x] Fixar o algoritmo como constante dentro das classes (não receber `String algoritmo` por parâmetro)
 - [ ] Assinar/verificar **arquivo** lendo em blocos (`InputStream` + `update` em loop), sem carregar o arquivo inteiro na memória
 - [ ] Derivar/armazenar senha com PBKDF2WithHmacSHA256 (salt aleatório por usuário, muitas iterações)
 - [ ] Cifrar/decifrar a chave privada com AES-GCM, usando chave derivada da senha (salt próprio, separado do salt do login)
