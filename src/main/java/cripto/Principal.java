@@ -1,4 +1,5 @@
 package cripto;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 
@@ -12,12 +13,12 @@ public class Principal {
 			KeyPair chave = keyGen.generateKeyPair();
 			
 			//Mensagem assinada válida - printa true
-			byte[] mensagem = "Maria Luiza".getBytes();
+			byte[] mensagem = "Maria Luiza".getBytes(StandardCharsets.UTF_8);
 			byte[] mensagemAssinada = Assinador.assinar("SHA256withRSA", mensagem, chave.getPrivate());
 			System.out.println(Verificador.verificar("SHA256withRSA", mensagem, mensagemAssinada, chave.getPublic()));
 
 			//Mensagem assinada inválida - mensagem original vai ser alterada após a assinatura
-			byte[] mensagemAlterada = "Maria Luisa".getBytes(); //Maria Luiza -> Maria Luisa, alteração de 1 byte
+			byte[] mensagemAlterada = "Maria Luisa".getBytes(StandardCharsets.UTF_8); //Maria Luiza -> Maria Luisa, alteração de 1 byte
 			System.out.println(Verificador.verificar("SHA256withRSA", mensagemAlterada, mensagemAssinada, chave.getPublic()));
 		}
 		catch (Exception e) {

@@ -20,8 +20,9 @@ Aplicação desktop em **Java** (Swing/JFrame) que **simula** um sistema de cert
 O mínimo para o fluxo completo funcionar, já atendendo aos requisitos acima.
 
 - [x] **Projeto Maven configurado** (Java 21 + driver JDBC do SQLite)
-- [x] **Camada de criptografia isolada e testada** (gerar par RSA 2048, assinar, verificar, detectar alteração de 1 byte)
-- [ ] **Hash de arquivos em blocos** (qualquer tamanho de arquivo, sem carregar tudo na memória)
+- [x] **Assinar e verificar bytes** com RSA 2048 + SHA-256, com testes (detecta alteração de 1 byte)
+- [ ] **Gerador de chaves** como classe própria da camada `cripto`
+- [ ] **Assinar/verificar arquivos em blocos** (qualquer tamanho, sem carregar tudo na memória; o `SHA256withRSA` já faz o hash internamente)
 - [ ] **Banco SQLite** com tabela de usuários
 - [ ] **Cadastro e login**: senha armazenada como hash PBKDF2WithHmacSHA256 + salt (ver "Decisões de design")
 - [ ] **Geração do par de chaves no cadastro**: chave pública guardada em claro; chave privada guardada **cifrada** com chave derivada da senha do usuário
@@ -66,9 +67,9 @@ Criptografia com a API padrão do JDK (`java.security`, `javax.crypto`). A únic
 |---|---|---|
 | Persistência de usuários | SQLite (driver `sqlite-jdbc`) | Decidido |
 | Senha de login | **PBKDF2WithHmacSHA256** (nativo do JDK) com salt aleatório por usuário e muitas iterações, em vez de SHA-256 simples | Decidido |
-| Chave privada | Guardada no banco **cifrada** (AES-GCM) com chave derivada da senha do usuário, com salt próprio, separada do hash de login | Proposta |
-| Local da assinatura | Arquivo `.sig` ao lado do original | Proposta |
-| Identificação do assinante | O `.sig` inclui o nome do usuário; a verificação busca a chave pública dele no banco | Proposta |
+| Chave privada | Guardada no banco **cifrada** (AES-GCM) com chave derivada da senha do usuário, com salt próprio, separada do hash de login | Decidido |
+| Local da assinatura | Arquivo `.sig` ao lado do original | Decidido |
+| Identificação do assinante | O `.sig` inclui o nome do usuário; a verificação busca a chave pública dele no banco | Decidido |
 | Gerenciador de dependências | Maven | Decidido |
 
 ## Limitações conhecidas
