@@ -28,6 +28,7 @@ public class AssinadorVerificadorTest {
             Chave válida -> assinar com sucesso */
     
     private static KeyPair chave;
+    private static KeyPair chave2;
 
     @BeforeAll 
     static void setup() throws NoSuchAlgorithmException {
@@ -35,6 +36,7 @@ public class AssinadorVerificadorTest {
         keyGen = KeyPairGenerator.getInstance("RSA");
 		keyGen.initialize(2048);
 	    chave = keyGen.generateKeyPair();
+        chave2 = keyGen.generateKeyPair();
     }
 
     @Test 
@@ -91,5 +93,28 @@ public class AssinadorVerificadorTest {
         byte[] assinatura = Assinador.assinar("SHA256withRSA", mensagem, chave.getPrivate());
         byte[] mensagemAlterada = "mensagem".getBytes(StandardCharsets.UTF_8);
         assertEquals(false, Verificador.verificar("SHA256withRSA", mensagemAlterada, assinatura, chave.getPublic()));
+    }
+
+    @Test
+    void verificador_assinaturaComOutraChave() throws Exception {
+        byte[] mensagem = "Mensagem".getBytes(StandardCharsets.UTF_8);
+        byte[] assinatura = Assinador.assinar("SHA256withRSA", mensagem, chave.getPrivate());
+        assertEquals(false, Verificador.verificar("SHA256withRSA", mensagem, assinatura, chave2.getPublic()));
+    }
+
+    @Test
+    void verificador_assinaturaComTamanhoErrado() throws Exception {
+        byte[] mensagem = "Mensagem".getBytes(StandardCharsets.UTF_8);
+        byte[] assinatura = new byte[10];
+        assertThrows(SignatureException.class, () -> {
+            Verificador.verificar("SHA256withRSA", mensagem, assinatura, chave.getPublic());
+        });
+    }
+
+    @Test
+    void verificador_assinaturaComConteudoLixo() throws Exception {
+        byte[] mensagem = "Mensagem".getBytes(StandardCharsets.UTF_8);
+        byte[] assinatura = new byte[256];
+        assertEquals(false, Verificador.verificar("SHA256withRSA", mensagem, assinatura, chave.getPublic()));
     }
 }
